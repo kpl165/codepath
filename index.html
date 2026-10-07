@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CodePath – Learn HTML, CSS, JavaScript & SQL</title>
+<meta name="description" content="Free, simple coding lessons and notes for HTML, CSS, JavaScript and SQL.">
+<meta name="author" content="Kapil Deb Subedi">
+<meta name="theme-color" content="#1f6feb">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--text:#1b2430;--muted:#5a6676;--line:#dde3ec;--accent:#1f6feb;--ok:#1a7f37;--bad:#c62828;--code:#0f1720;--codetext:#e6edf3}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e131a;--card:#161d27;--text:#e8edf3;--muted:#9aa7b8;--line:#263142;--accent:#5b9bff;--ok:#4cc16b;--bad:#ff7b72}}
+:root[data-theme="dark"]{--bg:#0e131a;--card:#161d27;--text:#e8edf3;--muted:#9aa7b8;--line:#263142;--accent:#5b9bff;--ok:#4cc16b;--bad:#ff7b72}
+*{box-sizing:border-box}
+body{margin:0;font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text)}
+header{display:flex;align-items:center;gap:10px;padding:12px 20px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+header h1{font-size:1.2rem;margin:0;flex:1}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+button:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+main{max-width:1100px;margin:0 auto;padding:20px}
+h2.big{font-size:2rem;line-height:1.2;margin:20px 0 8px}
+.muted{color:var(--muted)}
+.bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:8px 0 4px}
+.bar i{display:block;height:100%;background:var(--ok);transition:width .3s}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:16px}
+.item{display:block;text-align:left;width:100%;padding:16px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+.item b{font-size:1.1rem}
+.list{display:grid;gap:10px;margin-top:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;align-items:center}
+.tick{color:var(--ok);float:right}
+.lesson{display:grid;grid-template-columns:1fr 1.2fr;gap:20px}
+@media(max-width:800px){.lesson{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;overflow-x:auto}
+.panel h2,.panel h3{margin-top:0}
+.notes h3{margin:22px 0 6px}
+code{background:var(--line);padding:1px 6px;border-radius:5px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em}
+pre{background:var(--code);color:var(--codetext);padding:12px;border-radius:10px;overflow-x:auto;margin:8px 0}
+pre code{background:none;padding:0;color:inherit}
+.task{border-left:4px solid var(--accent);padding:8px 12px;background:var(--bg);margin:14px 0;border-radius:0 8px 8px 0}
+textarea{width:100%;height:230px;background:var(--code);color:var(--codetext);border:1px solid var(--line);border-radius:10px;padding:12px;font:15px/1.5 ui-monospace,Menlo,Consolas,monospace;resize:vertical;tab-size:2}
+iframe{width:100%;height:170px;border:1px solid var(--line);border-radius:10px;background:#fff;margin-top:10px}
+#sqlout{margin-top:10px;overflow-x:auto;max-height:260px;overflow-y:auto}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+th{background:var(--bg)}
+#msg{padding:10px 14px;border-radius:8px;margin-top:8px;display:none;font-weight:600}
+#msg.ok{display:block;background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok)}
+#msg.bad{display:block;background:color-mix(in srgb,var(--bad) 15%,transparent);color:var(--bad)}
+.hide{display:none!important}
+input{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text)}
+#q{width:100%;margin:10px 0}
+.badge{display:inline-block;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:2px 12px;margin:8px 6px 0 0;font-size:.9rem}
+.okt{color:var(--ok);font-weight:600}.badt{color:var(--bad);font-weight:600}
+.certbox{text-align:center;border:6px double var(--accent);padding:40px 20px;margin-top:14px}
+.item:disabled{opacity:.7;cursor:default}
+@media print{header,footer,button,.row{display:none!important}body{background:#fff;color:#000}.panel{border:0}.certbox{border:6px double #1f6feb}}
+html{scroll-behavior:smooth}
+.fade{animation:fade .35s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+button{transition:transform .15s,box-shadow .15s,background .2s,border-color .2s}
+button:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.12)}
+button:active:not(:disabled){transform:scale(.97)}
+.item.card{border-top:4px solid var(--c)}
+.ico{display:inline-grid;place-items:center;width:46px;height:46px;border-radius:12px;background:color-mix(in srgb,var(--c) 18%,transparent);font-size:1.5rem;margin-bottom:6px}
+.hero{display:flex;align-items:center;gap:20px;flex-wrap:wrap;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 16%,var(--card)),var(--card));border:1px solid var(--line);border-radius:18px;padding:12px 24px;margin:12px 0}
+.hero>div{flex:1 1 300px}
+.hero svg{flex:0 1 280px;max-width:100%;height:auto}
+.win{fill:var(--code)}
+.float{animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+.blink{animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:99}
+.copy{margin:14px 0 0;font-weight:600}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+footer{text-align:center;color:var(--muted);padding:30px 20px;font-size:.9rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>🧭 CodePath</h1>
+  <button id="back" class="hide">← Back</button>
+  <button id="theme" aria-label="Switch light or dark mode">🌓</button>
+</header>
+<main>
+  <section id="menu"></section>
+  <section id="course" class="hide"></section>
+  <section id="notes" class="hide"></section>
+  <section id="quiz" class="hide"></section>
+  <section id="cert" class="hide"></section>
+  <section id="lesson" class="hide">
+    <div class="lesson">
+      <div class="panel">
+        <h2 id="ltitle"></h2><div id="lbody"></div>
+        <div class="task"><b>Your task:</b> <span id="ltask"></span></div>
+        <details><summary>Need a hint?</summary><p id="lhint"></p></details>
+        <details><summary>Show solution</summary><pre><code id="lsol"></code></pre></details>
+      </div>
+      <div class="panel">
+        <label for="code"><b id="elabel">Code editor</b></label>
+        <textarea id="code" spellcheck="false"></textarea>
+        <div class="row">
+          <button id="run">▶ Run</button>
+          <button id="check" class="primary">✔ Check my answer</button>
+          <button id="reset">Reset</button>
+        </div>
+        <div id="msg" role="status"></div>
+        <iframe id="out" title="Result preview" sandbox="allow-scripts allow-same-origin"></iframe>
+        <div id="sqlout" class="hide"></div>
+        <div class="row"><button id="next" class="hide primary">Next lesson →</button></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>Tip: press Ctrl + Enter (Cmd + Enter on Mac) to run your code. SQL and Python need internet the first time they load.<br><button id="wipe">Reset my progress</button><p class="copy">© <span id="yr">2026</span> Kapil Deb Subedi. All rights reserved.<br>CodePath was created by Kapil Deb Subedi.</p></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+<script>
+// ================= CONTENT (edit here) =================
+// L(title, explanation, task, hint, starterCode, solution, check)
+const L=(title,body,task,hint,start,sol,check)=>({title,body,task,hint,start,sol,check});
+const SETUP="CREATE TABLE students(id INTEGER PRIMARY KEY,name TEXT,age INTEGER,city TEXT,marks INTEGER);INSERT INTO students VALUES(1,'Asha',20,'Kathmandu',85),(2,'Bikash',22,'Pokhara',72),(3,'Chitra',19,'Kathmandu',91),(4,'Dipesh',21,'Lalitpur',64),(5,'Esha',20,'Pokhara',78),(6,'Faisal',23,'Kathmandu',55);CREATE TABLE courses(id INTEGER PRIMARY KEY,student_id INTEGER,title TEXT);INSERT INTO courses VALUES(1,1,'HTML'),(2,1,'SQL'),(3,2,'CSS'),(4,3,'JavaScript'),(5,5,'SQL');";
+// SQL lesson: S(title, body, task, hint, answerSQL, {verify, ordered})
+const S=(t,b,k,h,ans,o={})=>({...L(t,b,k,h,"-- Write your SQL below\n",ans),sql:1,ans,...o});
+
+const COURSES={
+html:{name:"HTML",icon:"🌐",about:"The structure of every web page.",
+notes:`<h3>What is HTML?</h3><p>HTML (HyperText Markup Language) describes the <b>structure and content</b> of a web page: headings, text, links, images, lists, forms and more. Browsers read it and display the page.</p>
+<h3>Basic page structure</h3><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;My page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h3>Tags and attributes</h3><p>A tag usually has an opening and closing part: <code>&lt;p&gt;Text&lt;/p&gt;</code>. Some tags have no closing part, such as <code>&lt;img&gt;</code> and <code>&lt;br&gt;</code>. Attributes add extra information: <code>&lt;a href="https://example.com"&gt;</code>.</p>
+<h3>Common tags</h3><ul><li><code>h1</code> to <code>h6</code>: headings (h1 is the most important)</li><li><code>p</code>: paragraph</li><li><code>a</code>: link (<code>href</code> is the address)</li><li><code>img</code>: image (<code>src</code> is the file, <code>alt</code> describes it)</li><li><code>ul</code> / <code>ol</code> / <code>li</code>: bullet list / numbered list / list item</li><li><code>table</code>, <code>tr</code>, <code>th</code>, <code>td</code>: table, row, header cell, data cell</li><li><code>div</code> and <code>span</code>: generic containers (block and inline)</li><li><code>form</code>, <code>label</code>, <code>input</code>, <code>button</code>: forms</li></ul>
+<h3>Semantic tags</h3><p><code>header</code>, <code>nav</code>, <code>main</code>, <code>section</code>, <code>article</code>, <code>footer</code> describe the meaning of each part. They help search engines and screen readers.</p>
+<h3>Good habits</h3><ul><li>Always write an <code>alt</code> text on images.</li><li>Use only one <code>h1</code> per page.</li><li>Connect each <code>input</code> to a <code>label</code>.</li><li>Close your tags and indent your code.</li></ul>`,
+lessons:[
+L("Your first heading","<p>A <b>heading</b> uses the <code>&lt;h1&gt;</code> tag. The text goes between the opening tag and the closing tag <code>&lt;/h1&gt;</code>.</p>","Add an h1 heading that says Hello World.","Write the whole line: <h1>Hello World</h1>","","<h1>Hello World</h1>",d=>{const h=d.querySelector("h1");return !!h&&h.textContent.trim()==="Hello World"}),
+L("Paragraphs","<p>Normal text goes inside a paragraph: <code>&lt;p&gt;...&lt;/p&gt;</code>.</p>","Add a paragraph (p) with any text.","<p>I am learning to code.</p>","<h1>My page</h1>\n","<h1>My page</h1>\n<p>I am learning to code.</p>",d=>{const p=d.querySelector("p");return !!p&&p.textContent.trim().length>0}),
+L("Links","<p>A link uses <code>&lt;a&gt;</code>. The <code>href</code> attribute is where it goes.</p>","Add a link with the text Visit Example that goes to https://example.com","<a href=\"https://example.com\">Visit Example</a>","","<a href=\"https://example.com\">Visit Example</a>",d=>{const a=d.querySelector("a");return !!a&&a.getAttribute("href")==="https://example.com"&&a.textContent.trim()==="Visit Example"}),
+L("Lists","<p>A bullet list uses <code>&lt;ul&gt;</code>. Each item uses <code>&lt;li&gt;</code>.</p>","Make a ul list with exactly 3 li items.","<ul>\n  <li>One</li>\n  <li>Two</li>\n  <li>Three</li>\n</ul>","","<ul>\n  <li>One</li>\n  <li>Two</li>\n  <li>Three</li>\n</ul>",d=>{const u=d.querySelector("ul");return !!u&&u.querySelectorAll("li").length===3}),
+L("Images","<p>An image uses <code>&lt;img&gt;</code> with <code>src</code> (the file or address) and <code>alt</code> (a text description for people who cannot see it).</p>","Add an img with src=\"photo.jpg\" and an alt text.","<img src=\"photo.jpg\" alt=\"A photo of my dog\">","","<img src=\"photo.jpg\" alt=\"A photo of my dog\">",d=>{const i=d.querySelector("img");return !!i&&i.getAttribute("src")==="photo.jpg"&&(i.getAttribute("alt")||"").trim().length>0}),
+L("Tables","<p>A table uses <code>&lt;table&gt;</code>. Each row is <code>&lt;tr&gt;</code>. Cells are <code>&lt;th&gt;</code> (header) or <code>&lt;td&gt;</code> (data).</p>","Make a table with 2 rows (tr), each with 2 cells.","<table>\n  <tr><td>A</td><td>B</td></tr>\n  <tr><td>C</td><td>D</td></tr>\n</table>","","<table>\n  <tr><td>A</td><td>B</td></tr>\n  <tr><td>C</td><td>D</td></tr>\n</table>",d=>{const r=d.querySelectorAll("table tr");return r.length===2&&[...r].every(x=>x.children.length===2)}),
+L("Forms","<p>A form collects information. A <code>&lt;label&gt;</code> names an <code>&lt;input&gt;</code>. Linking them with <code>for</code> and <code>id</code> helps everyone, including screen reader users.</p>","Add a label (for=\"email\") and an input with id=\"email\" and type=\"email\", inside a form.","<form>\n  <label for=\"email\">Email</label>\n  <input id=\"email\" type=\"email\">\n</form>","","<form>\n  <label for=\"email\">Email</label>\n  <input id=\"email\" type=\"email\">\n</form>",d=>{const i=d.querySelector("form input#email[type=email]");const l=d.querySelector("label[for=email]");return !!i&&!!l})
+]},
+css:{name:"CSS",icon:"🎨",about:"Colors, spacing and layout.",
+notes:`<h3>What is CSS?</h3><p>CSS (Cascading Style Sheets) controls how HTML looks: colors, fonts, spacing and layout.</p>
+<h3>A CSS rule</h3><pre><code>h1 {
+  color: red;
+  font-size: 32px;
+}</code></pre><p><code>h1</code> is the <b>selector</b>. Inside the braces are <b>properties</b> and <b>values</b>, each ending with a semicolon.</p>
+<h3>Where to write CSS</h3><ul><li>Inside a <code>&lt;style&gt;</code> tag in the page</li><li>In a separate <code>.css</code> file linked with <code>&lt;link rel="stylesheet" href="style.css"&gt;</code> (best for real projects)</li></ul>
+<h3>Selectors</h3><ul><li><code>p</code>: every paragraph</li><li><code>.card</code>: elements with <code>class="card"</code></li><li><code>#title</code>: the element with <code>id="title"</code></li></ul>
+<h3>The box model</h3><p>Every element is a box: <b>content</b>, then <b>padding</b> (space inside), then <b>border</b>, then <b>margin</b> (space outside).</p>
+<h3>Useful properties</h3><ul><li><code>color</code>, <code>background-color</code></li><li><code>font-size</code>, <code>font-family</code>, <code>font-weight</code></li><li><code>padding</code>, <code>margin</code>, <code>border</code></li><li><code>width</code>, <code>height</code></li></ul>
+<h3>Flexbox (layout)</h3><pre><code>.row {
+  display: flex;
+  justify-content: center; /* horizontal */
+  align-items: center;     /* vertical */
+  gap: 10px;
+}</code></pre>
+<h3>Responsive design</h3><p>Use <code>@media (max-width: 600px) { ... }</code> to change styles on small screens, and add <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code> in the head.</p>`,
+lessons:[
+L("Change a color","<p>CSS goes <b>between</b> the <code>&lt;style&gt;</code> and <code>&lt;/style&gt;</code> tags. <code>h1 { color: red; }</code> makes every h1 red.</p>","Make the h1 text red.","Put the rule on the empty line between the style tags, not below them.","<style>\n  \n</style>\n<h1>Colorful heading</h1>","<style>\n  h1 { color: red; }\n</style>\n<h1>Colorful heading</h1>",(d,w)=>{const h=d.querySelector("h1");return !!h&&w.getComputedStyle(h).color==="rgb(255, 0, 0)"}),
+L("Background color","<p><code>background-color</code> sets the color behind an element. Select the whole page with <code>body</code>.</p>","Make the body background-color yellow.","body { background-color: yellow; } (between the style tags)","<style>\n  \n</style>\n<p>Hello!</p>","<style>\n  body { background-color: yellow; }\n</style>\n<p>Hello!</p>",(d,w)=>w.getComputedStyle(d.body).backgroundColor==="rgb(255, 255, 0)"),
+L("Font size","<p><code>font-size</code> sets text size. <code>px</code> means pixels.</p>","Make the paragraph font-size 30px.","p { font-size: 30px; }","<style>\n  \n</style>\n<p>Make me bigger</p>","<style>\n  p { font-size: 30px; }\n</style>\n<p>Make me bigger</p>",(d,w)=>w.getComputedStyle(d.querySelector("p")).fontSize==="30px"),
+L("Classes","<p>A <b>class</b> lets you style chosen elements. In HTML write <code>class=\"note\"</code>. In CSS select it with a dot: <code>.note</code>.</p>","Make elements with class note have color blue.",".note { color: blue; }","<style>\n  \n</style>\n<p class=\"note\">Important</p>\n<p>Normal</p>","<style>\n  .note { color: blue; }\n</style>\n<p class=\"note\">Important</p>\n<p>Normal</p>",(d,w)=>w.getComputedStyle(d.querySelector(".note")).color==="rgb(0, 0, 255)"&&w.getComputedStyle(d.querySelectorAll("p")[1]).color!=="rgb(0, 0, 255)"),
+L("Padding and border","<p><code>padding</code> is space inside the border. <code>border: 2px solid black;</code> draws a border.</p>","Give the div a padding of 20px and a 2px solid border.",".box { padding: 20px; border: 2px solid black; }","<style>\n  \n</style>\n<div class=\"box\">A box</div>","<style>\n  .box { padding: 20px; border: 2px solid black; }\n</style>\n<div class=\"box\">A box</div>",(d,w)=>{const s=w.getComputedStyle(d.querySelector(".box"));return s.paddingTop==="20px"&&s.borderTopWidth==="2px"&&s.borderTopStyle==="solid"}),
+L("Flexbox","<p>Set <code>display: flex;</code> on a parent to place its children in a row. <code>justify-content: center;</code> centers them horizontally.</p>","Make .row a flex container with justify-content: center.",".row { display: flex; justify-content: center; }","<style>\n  \n</style>\n<div class=\"row\"><span>A</span><span>B</span></div>","<style>\n  .row { display: flex; justify-content: center; }\n</style>\n<div class=\"row\"><span>A</span><span>B</span></div>",(d,w)=>{const s=w.getComputedStyle(d.querySelector(".row"));return s.display==="flex"&&s.justifyContent==="center"})
+]},
+js:{name:"JavaScript",icon:"⚡",about:"Make pages interactive.",
+notes:`<h3>What is JavaScript?</h3><p>JavaScript is the programming language of the web. It makes pages interactive: reacting to clicks, changing content, checking forms, and much more.</p>
+<h3>Where to write it</h3><p>Inside a <code>&lt;script&gt;</code> tag, or in a <code>.js</code> file loaded with <code>&lt;script src="app.js"&gt;&lt;/script&gt;</code>.</p>
+<h3>Variables</h3><pre><code>let age = 20;        // can change
+const name = "Asha"; // cannot be reassigned</code></pre>
+<h3>Data types</h3><p>Number (<code>5</code>), string (<code>"text"</code>), boolean (<code>true</code>/<code>false</code>), array (<code>[1, 2, 3]</code>), object (<code>{name: "Asha"}</code>), <code>null</code> and <code>undefined</code>.</p>
+<h3>Functions</h3><pre><code>function add(a, b) {
+  return a + b;
+}
+console.log(add(2, 3)); // 5</code></pre>
+<h3>Conditions and loops</h3><pre><code>if (age &gt;= 18) { /* adult */ } else { /* minor */ }
+for (let i = 1; i &lt;= 5; i++) { console.log(i); }</code></pre>
+<h3>Arrays</h3><pre><code>const nums = [1, 2, 3, 4];
+nums.push(5);                       // add to the end
+nums.filter(n =&gt; n % 2 === 0);      // [2, 4]
+nums.map(n =&gt; n * 2);               // [2, 4, 6, 8, 10]</code></pre>
+<h3>Working with the page (DOM)</h3><pre><code>const el = document.getElementById("message");
+el.textContent = "Hi!";
+button.addEventListener("click", () =&gt; { /* run on click */ });</code></pre>
+<h3>Tip</h3><p>Use <code>===</code> (strict equal) instead of <code>==</code>. Use <code>console.log()</code> to debug; open the browser console with F12.</p>`,
+lessons:[
+L("Write a function","<p>A <b>function</b> is reusable code. <code>return</code> gives back a result.</p>","Finish add so that add(2, 3) returns 5.","Inside the function write: return a + b;","<script>\nfunction add(a, b) {\n  // your code here\n}\n<\/script>","<script>\nfunction add(a, b) {\n  return a + b;\n}\n<\/script>",(d,w)=>typeof w.add==="function"&&w.add(2,3)===5&&w.add(10,-4)===6),
+L("Change the page","<p><code>document.getElementById(\"id\")</code> finds an element. <code>.textContent = \"...\"</code> changes its text.</p>","Make the paragraph with id message say: Hello from JavaScript!","document.getElementById(\"message\").textContent = \"Hello from JavaScript!\";","<p id=\"message\">Old text</p>\n<script>\n  \n<\/script>","<p id=\"message\">Old text</p>\n<script>\n  document.getElementById(\"message\").textContent = \"Hello from JavaScript!\";\n<\/script>",d=>{const m=d.getElementById("message");return !!m&&m.textContent.trim()==="Hello from JavaScript!"}),
+L("If and else","<p><code>if (condition) { ... } else { ... }</code> runs different code depending on a condition. <code>&gt;=</code> means greater than or equal to.</p>","Finish isAdult(age): true if age is 18 or more, otherwise false.","return age >= 18;","<script>\nfunction isAdult(age) {\n  \n}\n<\/script>","<script>\nfunction isAdult(age) {\n  return age >= 18;\n}\n<\/script>",(d,w)=>typeof w.isAdult==="function"&&w.isAdult(18)===true&&w.isAdult(17)===false&&w.isAdult(40)===true),
+L("Loops","<p>A <code>for</code> loop repeats code: <code>for (let i = 1; i &lt;= n; i++) { ... }</code></p>","Finish sumTo(n) so it returns 1 + 2 + ... + n. For example sumTo(4) is 10.","Start with let total = 0; then add i to total inside the loop, and return total.","<script>\nfunction sumTo(n) {\n  \n}\n<\/script>","<script>\nfunction sumTo(n) {\n  let total = 0;\n  for (let i = 1; i <= n; i++) {\n    total += i;\n  }\n  return total;\n}\n<\/script>",(d,w)=>typeof w.sumTo==="function"&&w.sumTo(4)===10&&w.sumTo(1)===1&&w.sumTo(100)===5050),
+L("Arrays","<p>Arrays store lists. <code>filter</code> keeps only items that pass a test: <code>[1,2,3].filter(n =&gt; n &gt; 1)</code> gives <code>[2,3]</code>. The remainder operator <code>%</code> gives what is left after division.</p>","Finish evens(list) so it returns only the even numbers.","return list.filter(n => n % 2 === 0);","<script>\nfunction evens(list) {\n  \n}\n<\/script>","<script>\nfunction evens(list) {\n  return list.filter(n => n % 2 === 0);\n}\n<\/script>",(d,w)=>typeof w.evens==="function"&&JSON.stringify(w.evens([1,2,3,4,5,6]))==="[2,4,6]"&&JSON.stringify(w.evens([1,3]))==="[]"),
+L("Click events","<p><code>addEventListener(\"click\", function)</code> runs your function when something is clicked.</p>","When the button is clicked, set the paragraph with id out to Clicked!","Inside the click function: document.getElementById(\"out\").textContent = \"Clicked!\";","<button id=\"btn\">Click me</button>\n<p id=\"out\"></p>\n<script>\n  document.getElementById(\"btn\").addEventListener(\"click\", function () {\n    \n  });\n<\/script>","<button id=\"btn\">Click me</button>\n<p id=\"out\"></p>\n<script>\n  document.getElementById(\"btn\").addEventListener(\"click\", function () {\n    document.getElementById(\"out\").textContent = \"Clicked!\";\n  });\n<\/script>",d=>{d.getElementById("btn").click();return d.getElementById("out").textContent.trim()==="Clicked!"})
+]},
+sql:{name:"SQL",icon:"🗄️",about:"Ask questions of a database.",
+notes:`<h3>What is SQL?</h3><p>SQL (Structured Query Language) is used to store, read and change data in a <b>relational database</b>. Data lives in <b>tables</b> made of rows and columns.</p>
+<h3>Practice tables used in lessons</h3><p><code>students(id, name, age, city, marks)</code> and <code>courses(id, student_id, title)</code>. The data resets every time you run a query, so you cannot break anything.</p>
+<h3>Read data: SELECT</h3><pre><code>SELECT name, city FROM students WHERE marks &gt;= 70 ORDER BY marks DESC LIMIT 3;</code></pre>
+<ul><li><code>SELECT</code>: which columns (<code>*</code> means all)</li><li><code>FROM</code>: which table</li><li><code>WHERE</code>: filter rows (<code>=</code>, <code>&lt;&gt;</code>, <code>&gt;</code>, <code>&lt;</code>, <code>AND</code>, <code>OR</code>, <code>LIKE</code>)</li><li><code>ORDER BY</code>: sort (<code>ASC</code> or <code>DESC</code>)</li><li><code>LIMIT</code>: maximum rows</li></ul>
+<h3>Summaries</h3><p><code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>. Use <code>GROUP BY</code> to summarize per group: <code>SELECT city, COUNT(*) FROM students GROUP BY city;</code></p>
+<h3>Change data</h3><pre><code>INSERT INTO students (id, name) VALUES (7, 'Gita');
+UPDATE students SET marks = 70 WHERE id = 4;
+DELETE FROM students WHERE id = 6;</code></pre><p><b>Always use WHERE with UPDATE and DELETE</b>, or every row changes.</p>
+<h3>Combine tables: JOIN</h3><pre><code>SELECT students.name, courses.title
+FROM students
+JOIN courses ON students.id = courses.student_id;</code></pre>
+<h3>Create a table</h3><pre><code>CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT, price REAL);</code></pre>
+<h3>Good habits</h3><ul><li>Text values use single quotes: <code>'Kathmandu'</code>.</li><li>End statements with a semicolon.</li><li>Keywords are not case-sensitive, but UPPERCASE keywords are easier to read.</li></ul>`,
+lessons:[
+S("Select everything","<p><code>SELECT * FROM table_name;</code> returns every column and row. The table here is <code>students</code>.</p>","Show all data from the students table.","SELECT * FROM students;","SELECT * FROM students;"),
+S("Choose columns","<p>List the columns you want, separated by commas: <code>SELECT name, age FROM students;</code></p>","Show only name and city of all students.","SELECT name, city FROM students;","SELECT name, city FROM students;"),
+S("Filter with WHERE","<p><code>WHERE</code> keeps only rows that match. Text goes in single quotes: <code>WHERE city = 'Pokhara'</code></p>","Show all columns for students who live in Kathmandu.","SELECT * FROM students WHERE city = 'Kathmandu';","SELECT * FROM students WHERE city = 'Kathmandu';"),
+S("Sort with ORDER BY","<p><code>ORDER BY column DESC</code> sorts from highest to lowest. <code>ASC</code> (default) sorts lowest to highest.</p>","Show name and marks, with the highest marks first.","SELECT name, marks FROM students ORDER BY marks DESC;","SELECT name, marks FROM students ORDER BY marks DESC;",{ordered:1}),
+S("Limit results","<p><code>LIMIT 3</code> returns at most 3 rows. Combine it with ORDER BY to get a top list.</p>","Show the names of the 3 students with the highest marks, best first.","SELECT name FROM students ORDER BY marks DESC LIMIT 3;","SELECT name FROM students ORDER BY marks DESC LIMIT 3;",{ordered:1}),
+S("Count and average","<p><code>COUNT(*)</code> counts rows. <code>AVG(column)</code> gives the average.</p>","Count how many students have marks of 70 or more.","SELECT COUNT(*) FROM students WHERE marks >= 70;","SELECT COUNT(*) FROM students WHERE marks >= 70;"),
+S("Group with GROUP BY","<p><code>GROUP BY</code> makes one row per value, so you can count or average each group.</p>","For each city, show the city and the number of students.","SELECT city, COUNT(*) FROM students GROUP BY city;","SELECT city, COUNT(*) FROM students GROUP BY city;"),
+S("Add rows with INSERT","<p><code>INSERT INTO table (columns) VALUES (values);</code> adds a new row.</p>","Add a student: id 7, name Gita, age 21, city Pokhara, marks 88.","INSERT INTO students (id, name, age, city, marks) VALUES (7, 'Gita', 21, 'Pokhara', 88);","INSERT INTO students (id,name,age,city,marks) VALUES (7,'Gita',21,'Pokhara',88);",{verify:"SELECT * FROM students ORDER BY id"}),
+S("Change rows with UPDATE","<p><code>UPDATE table SET column = value WHERE condition;</code> Without WHERE, every row changes!</p>","Change the marks of Dipesh to 70.","UPDATE students SET marks = 70 WHERE name = 'Dipesh';","UPDATE students SET marks = 70 WHERE name = 'Dipesh';",{verify:"SELECT * FROM students ORDER BY id"}),
+S("Remove rows with DELETE","<p><code>DELETE FROM table WHERE condition;</code> removes matching rows. Without WHERE, all rows are deleted!</p>","Delete students whose marks are below 60.","DELETE FROM students WHERE marks < 60;","DELETE FROM students WHERE marks < 60;",{verify:"SELECT * FROM students ORDER BY id"}),
+S("Join two tables","<p>A <code>JOIN</code> combines rows from two tables where a column matches: <code>students.id = courses.student_id</code>.</p>","Show each student name with the course title they take.","SELECT students.name, courses.title FROM students JOIN courses ON students.id = courses.student_id;","SELECT students.name, courses.title FROM students JOIN courses ON students.id = courses.student_id;")
+]}
+};
+
+// ===== MORE LESSONS =====
+COURSES.html.lessons.push(L("Semantic tags","<p>Semantic tags describe the meaning of each part of a page: <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code> and <code>&lt;footer&gt;</code>. They help search engines and screen readers.</p>","Add a header, a main and a footer element. Put any text inside each.","<header>Top</header>\n<main>Content</main>\n<footer>Bottom</footer>","","<header>Top</header>\n<main>Content</main>\n<footer>Bottom</footer>",d=>["header","main","footer"].every(t=>{const e=d.querySelector(t);return e&&e.textContent.trim()})));
+COURSES.css.lessons.push(
+L("Width and margin","<p><code>width</code> sets how wide a box is. <code>margin</code> is space outside the box.</p>","Give .box a width of 200px and a margin of 10px.",".box { width: 200px; margin: 10px; }","<style>\n  \n</style>\n<div class=\"box\">Box</div>","<style>\n  .box { width: 200px; margin: 10px; }\n</style>\n<div class=\"box\">Box</div>",(d,w)=>{const s=w.getComputedStyle(d.querySelector(".box"));return s.width==="200px"&&s.marginTop==="10px"}),
+L("Responsive design","<p>A <b>media query</b> applies styles only on certain screen sizes: <code>@media (max-width: 600px) { ... }</code> applies on screens 600px wide or narrower.</p>","Write a media query with max-width: 600px that sets body color to red.","@media (max-width: 600px) { body { color: red; } }","<style>\n  \n</style>\n<p>Resize me</p>","<style>\n  @media (max-width: 600px) {\n    body { color: red; }\n  }\n</style>\n<p>Resize me</p>",(d,w)=>[...d.styleSheets[0].cssRules].some(r=>r instanceof w.CSSMediaRule&&/max-width:\s*600px/.test(r.conditionText||r.media.mediaText)&&[...r.cssRules].some(x=>x.selectorText==="body"&&x.style.color==="red"))));
+COURSES.js.lessons.push(L("Objects","<p>An object stores named values: <code>{name: \"Asha\", age: 20}</code>. Read a value with <code>person.name</code>. Template strings use backticks: <code>`${person.name} is ${person.age}`</code></p>","Finish describe(p) so describe({name:\"Bo\", age:5}) returns Bo is 5","return p.name + \" is \" + p.age;","<script>\nfunction describe(p) {\n  \n}\n<\/script>","<script>\nfunction describe(p) {\n  return p.name + \" is \" + p.age;\n}\n<\/script>",(d,w)=>typeof w.describe==="function"&&w.describe({name:"Bo",age:5})==="Bo is 5"&&w.describe({name:"Asha",age:20})==="Asha is 20"));
+COURSES.sql.lessons.push(
+S("Search text with LIKE","<p><code>LIKE</code> searches for patterns. <code>%</code> means any characters, so <code>LIKE 'A%'</code> means starts with A.</p>","Show the names of students whose name starts with A.","SELECT name FROM students WHERE name LIKE 'A%';","SELECT name FROM students WHERE name LIKE 'A%';"),
+S("Average, min and max","<p><code>AVG</code>, <code>MIN</code> and <code>MAX</code> summarize a column.</p>","Show the average marks of all students.","SELECT AVG(marks) FROM students;","SELECT AVG(marks) FROM students;"),
+S("Filter groups with HAVING","<p><code>WHERE</code> filters rows before grouping. <code>HAVING</code> filters groups after grouping.</p>","Show cities with 2 or more students, with the student count.","SELECT city, COUNT(*) FROM students GROUP BY city HAVING COUNT(*) >= 2;","SELECT city, COUNT(*) FROM students GROUP BY city HAVING COUNT(*) >= 2;"),
+S("LEFT JOIN","<p>A normal JOIN shows only students that have a course. <code>LEFT JOIN</code> keeps every student, with NULL when there is no match.</p>","Show every student's name with their course title. Students without a course must still appear.","SELECT students.name, courses.title FROM students LEFT JOIN courses ON students.id = courses.student_id;","SELECT students.name, courses.title FROM students LEFT JOIN courses ON students.id = courses.student_id;"));
+COURSES.sql.notes+=`<h3>More tools</h3><ul><li><code>LIKE 'A%'</code>: text starting with A (<code>%</code> = any characters)</li><li><code>HAVING</code>: filter groups after <code>GROUP BY</code></li><li><code>LEFT JOIN</code>: keep all rows from the left table</li></ul>`;
+
+const P=(t,b,k,h,start,sol,test,expectOut)=>({...L(t,b,k,h,start||"# Write your code below\n",sol),py:1,test,expectOut});
+COURSES.py={name:"Python",icon:"🐍",about:"A friendly language for beginners, data and AI.",
+notes:`<h3>What is Python?</h3><p>Python is a popular, easy-to-read programming language used for websites, data analysis, automation and AI.</p>
+<h3>Print and variables</h3><pre><code>print("Hello")
+name = "Asha"
+age = 20
+print(name, age)</code></pre>
+<h3>Data types</h3><p>Numbers (<code>5</code>, <code>2.5</code>), strings (<code>"text"</code>), booleans (<code>True</code>, <code>False</code>), lists (<code>[1, 2, 3]</code>) and dictionaries (<code>{"name": "Asha"}</code>).</p>
+<h3>Indentation matters</h3><p>Python uses indentation (usually 4 spaces) instead of curly braces to show which code belongs together.</p>
+<pre><code>def grade(marks):
+    if marks &gt;= 40:
+        return "Pass"
+    return "Fail"</code></pre>
+<h3>Loops and lists</h3><pre><code>for n in [1, 2, 3]:
+    print(n)
+squares = [n * n for n in range(1, 5)]  # [1, 4, 9, 16]</code></pre>
+<h3>Handy built-ins</h3><p><code>len()</code>, <code>sum()</code>, <code>range()</code>, <code>max()</code>, <code>min()</code>, <code>sorted()</code>.</p>`,
+lessons:[
+P("Print text","<p><code>print()</code> shows text on the screen. Text goes inside quotes.</p>","Print the text Hello World","print(\"Hello World\")","","print(\"Hello World\")",null,"Hello World"),
+P("Variables","<p>A variable stores a value: <code>city = \"Pokhara\"</code></p>","Create name = \"Asha\" and age = 20.","name = \"Asha\"\nage = 20","","name = \"Asha\"\nage = 20","name == 'Asha' and age == 20"),
+P("Functions","<p><code>def</code> defines a function. The indented lines belong to it. <code>return</code> gives back a result.</p>","Finish add(a, b) so add(2, 3) returns 5.","return a + b","def add(a, b):\n    # your code here\n    pass\n","def add(a, b):\n    return a + b","add(2,3)==5 and add(-1,1)==0"),
+P("If and else","<p><code>if</code> runs code only when a condition is true. <code>&gt;=</code> means greater than or equal to.</p>","Finish grade(marks): return \"Pass\" if marks is 40 or more, otherwise \"Fail\".","if marks >= 40: return \"Pass\" (indented), then return \"Fail\".","def grade(marks):\n    \n","def grade(marks):\n    if marks >= 40:\n        return \"Pass\"\n    return \"Fail\"","grade(40)=='Pass' and grade(39)=='Fail' and grade(90)=='Pass'"),
+P("Loops","<p><code>for n in numbers:</code> repeats for each item in a list.</p>","Finish total(nums) so it returns the sum of the list. total([1,2,3]) is 6.","Start with t = 0, add each n to t inside the loop, then return t.","def total(nums):\n    \n","def total(nums):\n    t = 0\n    for n in nums:\n        t += n\n    return t","total([1,2,3])==6 and total([])==0"),
+P("List comprehension","<p>A list comprehension builds a list in one line: <code>[n * 2 for n in range(3)]</code> gives <code>[0, 2, 4]</code>. <code>range(1, 5)</code> is 1, 2, 3, 4.</p>","Finish squares(n) so squares(4) returns [1, 4, 9, 16].","return [i * i for i in range(1, n + 1)]","def squares(n):\n    \n","def squares(n):\n    return [i * i for i in range(1, n + 1)]","squares(4)==[1,4,9,16] and squares(1)==[1]")]};
+
+COURSES.proj={name:"Projects",icon:"🛠️",about:"Build small real things, step by step.",
+notes:`<h3>Why build projects?</h3><p>Projects turn separate skills into real ability. Each project here uses what you learned in the HTML, CSS and JavaScript courses.</p><h3>Tips</h3><ul><li>Build one small piece at a time and run it often.</li><li>If something breaks, undo the last change.</li><li>Put finished projects on GitHub Pages for your portfolio.</li></ul>`,
+lessons:[
+L("Project 1: Profile page","<p>Build a simple profile page using HTML only: a name, a photo, a short description and a list of skills.</p>","Add an h1, an img with an alt text, a p, and a ul with at least 2 li.","Use the tags from the HTML lessons.","","<h1>Asha</h1>\n<img src=\"me.jpg\" alt=\"Photo of Asha\">\n<p>I love coding.</p>\n<ul>\n  <li>HTML</li>\n  <li>CSS</li>\n</ul>",d=>!!d.querySelector("h1")&&!!d.querySelector("img[alt]:not([alt=''])")&&!!d.querySelector("p")&&d.querySelectorAll("ul li").length>=2),
+L("Project 2: Style the card","<p>Make the profile look like a card using padding, rounded corners and a background color.</p>","Make .card have padding 20px, border-radius 12px and background-color lightyellow.",".card { padding: 20px; border-radius: 12px; background-color: lightyellow; }","<style>\n  \n</style>\n<div class=\"card\"><h2>Asha</h2><p>Student</p></div>","<style>\n  .card { padding: 20px; border-radius: 12px; background-color: lightyellow; }\n</style>\n<div class=\"card\"><h2>Asha</h2><p>Student</p></div>",(d,w)=>{const s=w.getComputedStyle(d.querySelector(".card"));return s.paddingTop==="20px"&&s.borderTopLeftRadius==="12px"&&s.backgroundColor==="rgb(255, 255, 224)"}),
+L("Project 3: To-do list","<p>Make a working to-do list. When Add is clicked, create a new <code>li</code> with the typed text and put it in the list. Use <code>document.createElement(\"li\")</code> and <code>appendChild</code>.</p>","Finish the click function so each click adds the input text as a new li inside #list.","Create li, set its textContent to the input value, then append it to the list.","<input id=\"task\" placeholder=\"New task\">\n<button id=\"add\">Add</button>\n<ul id=\"list\"></ul>\n<script>\n  document.getElementById(\"add\").addEventListener(\"click\", function () {\n    \n  });\n<\/script>","<input id=\"task\" placeholder=\"New task\">\n<button id=\"add\">Add</button>\n<ul id=\"list\"></ul>\n<script>\n  document.getElementById(\"add\").addEventListener(\"click\", function () {\n    const li = document.createElement(\"li\");\n    li.textContent = document.getElementById(\"task\").value;\n    document.getElementById(\"list\").appendChild(li);\n  });\n<\/script>",d=>{const i=d.getElementById("task"),b=d.getElementById("add");i.value="Buy milk";b.click();i.value="Read";b.click();return [...d.querySelectorAll("#list li")].map(x=>x.textContent).join("|")==="Buy milk|Read"})]};
+
+const QUIZ={
+html:[["Which tag is the main, most important heading?",["&lt;h6&gt;","&lt;h1&gt;","&lt;head&gt;"],1,"h1 is the top-level heading. h6 is the smallest."],["Which attribute describes an image for people who cannot see it?",["alt","src","href"],0,"The alt attribute holds the text description."],["Which tag creates a link?",["&lt;link&gt;","&lt;a&gt;","&lt;url&gt;"],1,"The a (anchor) tag with an href makes a link."],["Which tag makes one row in a table?",["&lt;td&gt;","&lt;th&gt;","&lt;tr&gt;"],2,"tr is a row. td and th are cells inside it."]],
+css:[["Which rule makes text red?",["text-color: red;","color: red;","font-color: red;"],1,"The property is color."],["How do you select elements with class=\"note\"?","#note .note note()".split(" ").map((x,i)=>x),1,"A dot selects classes. A # selects ids."],["Which part of the box model is space OUTSIDE the border?",["padding","content","margin"],2,"Padding is inside the border. Margin is outside."],["Which line starts flexbox layout?",["display: flex;","display: row;","position: flex;"],0,"display: flex turns on flexbox."]],
+js:[["Which keyword declares a variable that cannot be reassigned?",["let","const","var"],1,"const cannot be reassigned. let can."],["What does 7 % 3 return?",["1","2","0"],0,"% gives the remainder. 7 divided by 3 leaves 1."],["Which array method keeps only items that pass a test?",["filter","map","push"],0,"filter returns a new array with the items that pass."],["Which is the strict equality operator?",["==","=","==="],2,"=== compares value and type. A single = assigns."]],
+sql:[["Which clause filters rows?",["ORDER BY","WHERE","GROUP BY"],1,"WHERE keeps only rows that match."],["Which statement adds a new row?",["INSERT INTO","ADD ROW","MAKE ROW"],0,"INSERT INTO adds rows."],["What does DELETE FROM students; do with no WHERE?",["Nothing","Deletes one row","Deletes all rows"],2,"Without WHERE the command affects every row."],["Which function counts rows?",["COUNT()","ROWS()","NUMBER()"],0,"COUNT(*) counts rows."]],
+py:[["How do you show text on the screen?",["echo('Hi')","print('Hi')","show('Hi')"],1,"print() displays output."],["Which keyword defines a function?",["function","fn","def"],2,"Python uses def."],["What does len([4, 5, 6]) return?",["3","2","6"],0,"len gives the number of items."],["How does Python mark the body of a function?",["Curly braces","Indentation","Semicolons"],1,"Python uses indentation."]]};
+
+// ================= APP =================
+const $=id=>document.getElementById(id);
+// ===== LOOK & FEEL =====
+const COL={html:"#e44d26",css:"#2965f1",js:"#e0a800",sql:"#00897b",py:"#3776ab",proj:"#8e44ad"};
+const HERO=`<svg viewBox="0 0 320 220" role="img" aria-label="Illustration of a code editor"><g class="float"><rect class="win" x="30" y="30" width="250" height="150" rx="14"/><circle cx="52" cy="50" r="5" fill="#ff5f56"/><circle cx="70" cy="50" r="5" fill="#ffbd2e"/><circle cx="88" cy="50" r="5" fill="#27c93f"/><rect x="50" y="74" width="90" height="8" rx="4" fill="#e44d26"/><rect x="50" y="94" width="150" height="8" rx="4" fill="#2965f1"/><rect x="70" y="114" width="120" height="8" rx="4" fill="#e0a800"/><rect x="70" y="134" width="70" height="8" rx="4" fill="#00897b"/><rect class="blink" x="50" y="154" width="8" height="14" fill="#e6edf3"/></g><circle class="float" cx="280" cy="48" r="24" fill="#8e44ad"/><text class="float" x="280" y="55" font-size="20" text-anchor="middle" fill="#fff" font-family="monospace" font-weight="700">&lt;/&gt;</text><circle class="float" cx="40" cy="195" r="14" fill="#1f6feb"/></svg>`;
+function confetti(){if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  const c=document.createElement("canvas");c.className="confetti";c.width=innerWidth;c.height=innerHeight;c.setAttribute("aria-hidden","true");document.body.appendChild(c);
+  const x=c.getContext("2d"),cols=["#e44d26","#2965f1","#e0a800","#00897b","#8e44ad","#1f6feb"];
+  const p=Array.from({length:90},()=>({x:innerWidth/2+(Math.random()-.5)*200,y:innerHeight*.35,vx:(Math.random()-.5)*12,vy:-Math.random()*10-4,s:Math.random()*8+4,c:cols[Math.random()*6|0],r:Math.random()*6}));
+  let f=0;(function t(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{q.vy+=.35;q.x+=q.vx;q.y+=q.vy;q.r+=.2;x.save();x.translate(q.x,q.y);x.rotate(q.r);x.fillStyle=q.c;x.fillRect(-q.s/2,-q.s/2,q.s,q.s/2);x.restore()});if(++f<110)requestAnimationFrame(t);else c.remove()})()}
+$("yr").textContent=new Date().getFullYear();
+
+const SECS=["menu","course","notes","lesson","quiz","cert"];
+const show=n=>{SECS.forEach(s=>$(s).classList.toggle("hide",s!==n));$("back").classList.toggle("hide",n==="menu");const e=$(n);e.classList.remove("fade");void e.offsetWidth;e.classList.add("fade");scrollTo(0,0)};
+const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+const store=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let done=load("cp-done2",[]),days=load("cp-days",[]),quizPass=load("cp-quiz",[]),ck="html",cur=0,backTo=()=>menu();
+const save=()=>store("cp-done2",done);
+const ymd=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+function streak(){const s=new Set(days),d=new Date();let n=0;if(!s.has(ymd(d)))d.setDate(d.getDate()-1);while(s.has(ymd(d))){n++;d.setDate(d.getDate()-1)}return n}
+const cnt=k=>COURSES[k].lessons.filter((_,i)=>done.includes(k+":"+i)).length;
+const full=k=>cnt(k)===COURSES[k].lessons.length;
+function badges(){const b=[];if(done.length>=1)b.push("🌱 First lesson");if(done.length>=10)b.push("🔟 10 lessons");if(streak()>=3)b.push("🔥 3-day streak");
+  Object.keys(COURSES).forEach(k=>{if(full(k))b.push("🏅 "+COURSES[k].name+" finished");if(quizPass.includes(k))b.push("📝 "+COURSES[k].name+" quiz")});return b}
+const strip=h=>h.replace(/<[^>]+>/g," ").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/\s+/g," ").toLowerCase();
+function search(t){t=t.trim().toLowerCase();const r=[];if(t.length<2)return r;
+  for(const k in COURSES){const c=COURSES[k];if(strip(c.notes).includes(t))r.push({k,i:-1,label:c.name+" notes"});
+    c.lessons.forEach((l,i)=>{if((l.title+" "+strip(l.body)+" "+l.task).toLowerCase().includes(t))r.push({k,i,label:c.name+": "+l.title})})}
+  return r.slice(0,15)}
+const open=(k,i)=>{ck=k;i<0?notes(k):lesson(i)};
+
+function menu(){
+  backTo=menu;show("menu");
+  const all=Object.keys(COURSES).reduce((a,k)=>a+COURSES[k].lessons.length,0),d=done.length,last=load("cp-last",null),bs=badges();
+  $("menu").innerHTML=`<div class="hero"><div><h2 class="big">Learn to code by doing</h2><p class="muted">Pick a language. Read the notes, practice with short lessons, then take a quiz. No sign-up. Progress is saved on this device.</p></div>${HERO}</div>
+  <input id="q" type="search" placeholder="Search lessons and notes (try: join, loop, flex)" aria-label="Search">
+  <div id="results" class="list"></div>
+  <div id="home"><div class="bar"><i style="width:${d/all*100}%"></i></div><div class="muted">${d} of ${all} lessons completed · 🔥 ${streak()} day streak</div>
+  <div class="row">${last&&COURSES[last.k]&&COURSES[last.k].lessons[last.i]?`<button class="primary" id="cont">▶ Continue: ${COURSES[last.k].lessons[last.i].title}</button>`:""}<button id="daily">🎯 Daily challenge</button></div>
+  <div>${bs.map(b=>`<span class="badge">${b}</span>`).join("")}</div>
+  <div class="grid">`+Object.keys(COURSES).map(k=>`<button class="item card" data-k="${k}" style="--c:${COL[k]}"><span class="ico">${COURSES[k].icon}</span><br><b>${COURSES[k].name}</b><div class="muted">${COURSES[k].about}</div><div class="muted">${cnt(k)} / ${COURSES[k].lessons.length} lessons</div></button>`).join("")+`</div></div>`;
+  $("menu").querySelectorAll(".item[data-k]").forEach(b=>b.onclick=()=>course(b.dataset.k));
+  if($("cont"))$("cont").onclick=()=>open(last.k,last.i);
+  $("daily").onclick=()=>{const all=[];for(const k in COURSES)COURSES[k].lessons.forEach((_,i)=>all.push([k,i]));const p=all[Math.floor(Date.now()/864e5)%all.length];open(p[0],p[1])};
+  $("q").oninput=e=>{const r=search(e.target.value),on=e.target.value.trim().length>=2;$("home").classList.toggle("hide",on);
+    $("results").innerHTML=on&&!r.length?"<p class='muted'>No results. Try another word.</p>":r.map((x,j)=>`<button class="item" data-j="${j}">${x.label}</button>`).join("");
+    $("results").querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{const x=r[+b.dataset.j];open(x.k,x.i)})};
+}
+function course(k){
+  ck=k;backTo=menu;show("course");const c=COURSES[k];
+  $("course").innerHTML=`<h2 class="big">${c.icon} ${c.name}</h2><p class="muted">${c.about}</p><div class="list"><button class="item" id="n"><b>📖 Read the notes</b><div class="muted">Everything you need to know about ${c.name}.</div></button>`+
+  (QUIZ[k]?`<button class="item" id="qz"><b>📝 Take the quiz</b>${quizPass.includes(k)?'<span class="tick">✔ passed</span>':""}</button>`:"")+
+  (full(k)?`<button class="item" id="ce"><b>🎓 Get your certificate</b></button>`:"")+`</div><h3>Lessons</h3><div class="list">`+
+  c.lessons.map((l,i)=>`<button class="item" data-i="${i}">${done.includes(k+":"+i)?'<span class="tick" aria-label="Completed">✔</span>':""}<b>${i+1}. ${l.title}</b></button>`).join("")+`</div>`;
+  $("n").onclick=()=>notes(k);if($("qz"))$("qz").onclick=()=>quiz(k);if($("ce"))$("ce").onclick=()=>cert(k);
+  $("course").querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>lesson(+b.dataset.i));
+}
+function notes(k){
+  ck=k;backTo=()=>course(k);show("notes");const c=COURSES[k];
+  $("notes").innerHTML=`<div class="panel notes"><h2>${c.icon} ${c.name} notes</h2>${c.notes}<div class="row"><button class="primary" id="go">Start the lessons</button><button id="pn">🖨 Print or save as PDF</button></div></div>`;
+  $("go").onclick=()=>course(k);$("pn").onclick=()=>print();
+}
+function quiz(k){
+  ck=k;backTo=()=>course(k);show("quiz");const Q=QUIZ[k];let i=0,sc=0;
+  const draw=()=>{
+    if(i>=Q.length){const pass=sc/Q.length>=0.7;if(pass&&!quizPass.includes(k)){confetti();quizPass.push(k);store("cp-quiz",quizPass)}
+      $("quiz").innerHTML=`<div class="panel"><h2>Score: ${sc} / ${Q.length}</h2><p>${pass?"🎉 You passed and earned a badge!":"You need 70% to pass. Review the notes and try again."}</p><div class="row"><button id="again">Try again</button><button class="primary" id="bk">Back to course</button></div></div>`;
+      $("again").onclick=()=>quiz(k);$("bk").onclick=()=>course(k);return}
+    const q=Q[i];
+    $("quiz").innerHTML=`<div class="panel"><h2>${COURSES[k].name} quiz: question ${i+1} of ${Q.length}</h2><p>${q[0]}</p><div class="list">${q[1].map((o,j)=>`<button class="item" data-j="${j}">${o}</button>`).join("")}</div><div id="fb"></div></div>`;
+    $("quiz").querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{const ok=+b.dataset.j===q[2];if(ok)sc++;
+      $("quiz").querySelectorAll("[data-j]").forEach(x=>x.disabled=true);
+      $("fb").innerHTML=`<p class="${ok?"okt":"badt"}">${ok?"Correct!":"Not quite."} ${q[3]}</p><button class="primary" id="nx">Next</button>`;$("nx").onclick=()=>{i++;draw()}})};
+  draw();
+}
+function cert(k){
+  backTo=()=>course(k);show("cert");const nm=load("cp-name","");
+  $("cert").innerHTML=`<div class="row"><label for="nm">Your name:</label><input id="nm"><button class="primary" id="pr">🖨 Print or save as PDF</button></div><div class="panel certbox"><h2>Certificate of Completion</h2><p>This certifies that</p><h1 id="cn"></h1><p>has completed all lessons in</p><h2>${COURSES[k].name}</h2><p>${new Date().toLocaleDateString()} – CodePath by Kapil Deb Subedi</p></div>`;
+  $("nm").value=nm;$("cn").textContent=nm||"Your Name";
+  $("nm").oninput=e=>{store("cp-name",e.target.value);$("cn").textContent=e.target.value||"Your Name"};$("pr").onclick=()=>print();
+}
+let SQL=null,sqlErr=false;
+if(window.initSqlJs){initSqlJs({locateFile:f=>"https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/"+f}).then(s=>SQL=s).catch(()=>sqlErr=true)}else sqlErr=true;
+let pyP=null;
+const getPy=()=>pyP||(pyP=new Promise((res,rej)=>{const s=document.createElement("script");s.src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";s.onload=()=>loadPyodide().then(res,rej);s.onerror=()=>{pyP=null;rej(new Error("Could not load Python. Check your internet connection."))};document.head.appendChild(s)}));
+async function pyExec(code,test){const py=await getPy();let out="";py.setStdout({batched:s=>out+=s+"\n"});const ns=py.globals.get("dict")();
+  try{py.runPython(code,{globals:ns});return{out,ok:test?py.runPython(test,{globals:ns}):null}}finally{ns.destroy()}}
+const cl=()=>COURSES[ck].lessons[cur];
+
+function lesson(i){
+  cur=i;const l=cl();backTo=()=>course(ck);show("lesson");store("cp-last",{k:ck,i});
+  $("ltitle").textContent=l.title;$("lbody").innerHTML=l.body;$("ltask").textContent=l.task;
+  $("lhint").textContent=l.hint;$("lsol").textContent=l.sol;$("code").value=l.start;
+  $("lesson").querySelectorAll("details").forEach(d=>d.open=false);
+  $("msg").className="";$("next").classList.add("hide");
+  const web=!(l.sql||l.py);$("out").classList.toggle("hide",!web);$("sqlout").classList.toggle("hide",web);
+  $("elabel").textContent=l.sql?"SQL editor":l.py?"Python editor":"Code editor";
+  run();
+}
+const mkdb=()=>{const d=new SQL.Database();d.run(SETUP);return d};
+const table=r=>!r?"<p class='muted'>Query ran. No rows to show.</p>":"<table><tr>"+r.columns.map(c=>`<th>${c}</th>`).join("")+"</tr>"+r.values.map(v=>"<tr>"+v.map(x=>`<td>${x===null?"NULL":x}</td>`).join("")+"</tr>").join("")+"</table>";
+const showText=t=>{$("sqlout").innerHTML="<pre><code></code></pre>";$("sqlout").firstChild.firstChild.textContent=t};
+async function run(){
+  const l=cl();
+  if(l.py){$("sqlout").innerHTML="<p class='muted'>Running... The first run loads Python (about 10 MB).</p>";
+    try{const r=await pyExec($("code").value);showText(r.out||"(No output. Use print() to show something.)")}catch(e){showText(String(e.message).split("\n").slice(-4).join("\n"))}return}
+  if(!l.sql){$("out").srcdoc=$("code").value;return}
+  if(!SQL){$("sqlout").innerHTML=`<p class="muted">${sqlErr?"The SQL engine could not load. Check your internet connection and reload.":"Loading SQL engine... try again in a moment."}</p>`;return}
+  try{const r=mkdb().exec($("code").value);$("sqlout").innerHTML=r.length?table(r[r.length-1]):table(null)}
+  catch(e){$("sqlout").innerHTML=`<p style="color:var(--bad)">Error: ${e.message}</p>`}
+}
+const norm=(r,ord)=>{const a=(r&&r.length?r[r.length-1].values:[]).map(v=>JSON.stringify(v));return ord?a:a.sort()};
+async function check(){
+  const l=cl();let ok=false;
+  if(l.py){try{const r=await pyExec($("code").value,l.test);ok=l.expectOut!=null?r.out.trim()===l.expectOut:r.ok===true}catch(e){ok=false}}
+  else if(l.sql){
+    if(!SQL){run();return}
+    try{const a=mkdb(),b=mkdb(),ra=a.exec($("code").value),rb=b.exec(l.ans),q=l.verify;
+      ok=JSON.stringify(norm(q?a.exec(q):ra,l.ordered))===JSON.stringify(norm(q?b.exec(q):rb,l.ordered))}catch(e){ok=false}
+  }else{
+    await new Promise(r=>{$("out").addEventListener("load",r,{once:true});run()});
+    try{const f=$("out");ok=!!l.check(f.contentDocument,f.contentWindow)}catch(e){ok=false}
+  }
+  const m=$("msg"),key=ck+":"+cur;
+  if(ok){m.className="ok";m.textContent="🎉 Correct! Great job.";confetti();
+    if(!done.includes(key)){done.push(key);save()}
+    if(!days.includes(ymd(new Date()))){days.push(ymd(new Date()));store("cp-days",days)}
+    if(cur<COURSES[ck].lessons.length-1)$("next").classList.remove("hide");else m.textContent="🎉 Correct! You finished every "+COURSES[ck].name+" lesson. Your certificate is ready on the course page."}
+  else{m.className="bad";m.textContent="Not quite yet. Read the task again, or open the hint or solution."}
+}
+$("run").onclick=run;$("check").onclick=check;
+$("reset").onclick=()=>{$("code").value=cl().start;$("msg").className="";run()};
+$("next").onclick=()=>lesson(cur+1);
+$("back").onclick=()=>backTo();
+$("wipe").onclick=()=>{if(confirm("Delete all your progress on this device?")){["cp-done2","cp-days","cp-quiz","cp-last"].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});done=[];days=[];quizPass=[];menu()}};
+$("code").addEventListener("keydown",e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){e.preventDefault();run()}
+  if(e.key==="Tab"){e.preventDefault();const t=e.target,s=t.selectionStart;t.value=t.value.slice(0,s)+"    "+t.value.slice(t.selectionEnd);t.selectionStart=t.selectionEnd=s+4}
+});
+$("theme").onclick=()=>{const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;const n=dark?"light":"dark";r.dataset.theme=n;try{localStorage.setItem("cp-theme",n)}catch(e){}};
+try{const t=localStorage.getItem("cp-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("sw.js").catch(()=>{});
+menu();
+</script>
+</body>
+</html>
